@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+Home
+{% endblock title %}
+    
+
+{% block content %}
+
+{% for s in students %}
+   <h1>{{ s.name }} {{ s.age }}</h1>
+{% endfor %}
+
+{% endblock content %}
