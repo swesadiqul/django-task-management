@@ -1,0 +1,223 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm">
+    <div class="container">
+        <a class="navbar-brand" href="/">Task Management</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript:void(0)">About Us</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="javascript:void(0)" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Services
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="javascript:void(0)">Task</a></li>
+                        <li><a class="dropdown-item" href="javascript:void(0)">Set a Goal</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="javascript:void(0)">Track Yourself</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="d-flex">
+                <!-- <a href=""><i class="fa-regular fa-user"></i></a> -->
+                <!-- <a href=""><i class="fa-solid fa-arrow-right-to-bracket fs-5"></i></a> -->
+                <!-- Button trigger modal -->
+                
+                {% if request.user.is_authenticated %}
+                    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#Profile" aria-controls="Profile">
+                        <i class="fa-regular fa-circle-user fs-5"></i>
+                    </button>
+                {% else %}
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <i class="fa-solid fa-arrow-right-to-bracket fs-5"></i>
+                    </button>
+                {% endif %}
+                    
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen-sm-down">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel">Log In</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'signin' %}" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                      <input type="text" name="username" class="form-control form-control-lg" placeholder="Username" required>
+                    </div>
+                    <div class="mb-3">
+                      <input type="password" name="password" class="form-control form-control-lg" placeholder="Password">
+                    </div>
+                    <div class="d-grid gap-3 mt-4">
+                        <button type="submit" class="btn btn-lg btn-primary">Log In</button>
+                    </div>
+                    <div class="forgot-password py-3 text-center">
+                        <a href="#ChangePassword" data-bs-toggle="modal">Forgotten password?</a>
+                    </div>
+                    <div class="d-grid gap-3">
+                        <button class="btn btn-lg btn-info" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Create a New Account</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog modal-fullscreen-sm-down">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title" id="exampleModalToggleLabel">Sign Up</h3>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="signup-form" action="" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+              <input type="text" name="username" class="form-control" placeholder="Username">
+            </div>
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col">
+                        <input type="text" name="first_name" class="form-control" placeholder="First name">
+                    </div>
+                    <div class="col">
+                        <input type="text" name="last_name" class="form-control" placeholder="Last name">
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <input type="email" name="email" class="form-control" placeholder="E-mail address">
+            </div>
+            <div class="mb-3">
+                <input type="password" name="password1" class="form-control" placeholder="New password">
+            </div>
+            <div class="mb-3">
+                <input type="password" name="password2" class="form-control" placeholder="Confirm password">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button id="submit-button" class="btn btn-primary" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal">Next</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+    <div class="modal-dialog modal-fullscreen-sm-down">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">OTP</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="{% url 'verify_account' %}" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <input type="text" name="otp" class="form-control" placeholder="OTP">
+            </div>
+            <div class="text-end">
+                <button type="button" class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Back</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<!-- Change Password -->
+<div class="modal fade" id="ChangePassword" aria-hidden="true" aria-labelledby="ChangePassword" tabindex="-1">
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h3 class="modal-title" id="ChangePassword">Change Password</h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+        <form action="" method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <input type="email" name="email" class="form-control" placeholder="E-mail address">
+        </div>
+        <div class="text-end">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        </form>
+    </div>
+    </div>
+</div>
+</div>
+
+
+
+<!-- Profile Offcanvas -->
+<div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="Profile" aria-labelledby="ProfileLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="ProfileLabel">Dashboard</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">Active</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'signout' %}">Logout</a>
+        </li>
+      </ul>
+  </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#signup-form').on('submit', function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: '{% url "signup" %}',
+                type: 'POST',
+                data: $(this).serialize(),
+                dataType: 'json',
+                success: function(data) {
+                    console.log(data.message);
+                },
+                error: function(xhr, status, error) {
+                    console.log(xhr.responseText);
+                }
+            });
+        });
+
+        $('#submit-button').on('click', function() {
+            $('#signup-form').submit();
+        });
+    });
+</script>

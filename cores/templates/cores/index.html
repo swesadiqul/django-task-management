@@ -7,9 +7,13 @@ Home
     
 
 {% block content %}
-
-{% for s in students %}
-   <h1>{{ s.name }} {{ s.age }}</h1>
-{% endfor %}
-
+<section id="home">
+<div class="container">
+   <div class="row mt-5">
+      <div class="col shadow">
+         <h1 class="py-5 text-center">Welcome {{ request.user.username }}, This is home page.</h1>
+      </div>
+   </div>
+</div>
+</section>
 {% endblock content %}
