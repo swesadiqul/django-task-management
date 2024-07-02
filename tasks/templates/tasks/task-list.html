@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+<div class="container mt-5">
+    <table class="table table-responsive table-bordered">
+        <thead>
+            <tr>
+                <th>S.N</th>
+                <th>Title</th>
+                <th>Deadline</th>
+                <th>Status</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ task.title }}</td>
+                    <td>{{ task.deadline }}</td>
+                    <td>{{ task.get_status_display }}</td>
+                    <td class="text-center">
+                        <a href="{% url 'task' task.pk %}">View</a>
+                        <a href="{% url 'task_edit' task.pk %}">Edit</a>
+                        <a href="{% url 'task_delete' task.pk %}">Delete</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <p>No task available here.</p>
+            {% endfor %}
+        </tbody>
+        <tfoot></tfoot>
+    </table>
+</div>
+{% endblock content %}
+    

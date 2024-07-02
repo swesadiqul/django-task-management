@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-6 shadow rounded p-4">
+            <h4>ID: {{ task.id }}</h4>
+            <h5>Title: {{ task.title }}</h5>
+            <p><strong>Deadline:</strong> {{ task.deadline }}</p>
+            <p><strong>Status:</strong> {{ task.get_status_display }}</p>
+            <p><strong>Created:</strong> {{ task.created_at }}</p>
+            <p><strong>Updated:</strong> {{ task.updated_at }}</p>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+    
